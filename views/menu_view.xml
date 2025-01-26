@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="menu_view_tree" model="ir.ui.view">
+        <field name="name">menu.view.tree</field>
+        <field name="model">lunch_menu_management.menu</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="menu_item"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="menu_view_form_v2" model="ir.ui.view">
+        <field name="name">menu.view.form</field>
+        <field name="model">lunch_menu_management.menu</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_on_click" string="Create a menu" type="object" display="always"/>
+                </header>
+                <sheet>
+                    <field name="image"
+                           options="{'accepted_file_extensions': '.png,.jpg,.jpeg'}"
+                           widget="image" class="oe_avatar"/>
+                    <group>
+                        <group>
+                            <field name="menu_item"/>
+                            <field name="price"/>
+                        </group>
+                        <group>
+                            <field name="default_currency"/>
+                            <field name="color" readonly="True"/>
+                            <field name="category"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="menu_view_form" model="ir.ui.view">
+        <field name="name">menu.view.form</field>
+        <field name="model">lunch_menu_management.menu</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="menu_id_sequence" string="Menu ID"/>
+                </header>
+                <sheet>
+                    <header>
+                        <button name="url_action" string="Visit Us" type="object"/>
+                        <field name="active" invisible="1"/>
+                        <button name="custom_log" string="Log Test" type="object" class="btn-primary"/>
+                    </header>
+                    <field name="image"
+                           options="{'accepted_file_extensions': '.png,.jpg,.jpeg'}"
+                           widget="image" class="oe_avatar"/>
+                    <group>
+                        <group>
+                            <field name="menu_item"/>
+                            <field name="price"/>
+                            <field name="partner" context="{'show_address':1}"/>
+                        </group>
+                        <group>
+                            <field name="default_currency"/>
+                            <field name="color" readonly="True"/>
+                            <field name="category"/>
+                        </group>
+                    </group>
+                </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Kanban View -->
+    <record id="menu_view_kanban" model="ir.ui.view">
+        <field name="name">menu.view.kanban</field>
+        <field name="model">lunch_menu_management.menu</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard o_project_kanban o_emphasize_colors"
+                    default_order="price"
+                    default_group_by="category"
+                    records_draggable="false"
+                    quick_create="false"
+                    action="action_on_click" type="object"
+            >
+                <field name="menu_item"/>
+                <field name="price"/>
+                <field name="image"/>
+                <field name="category"/>
+                <header>
+                    <button name="action_on_click" string="Create a menu" type="object" display="always"/>
+                </header>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click oe_kanban_badge oe_kanban_color_white o_kanban_gamification">
+                            <div class="oe_kanban_card_header">
+                                <div class="oe_kanban_card_title">
+                                    <field name="menu_item"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_card_content">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('lunch_menu_management.menu', 'image', record.id.value)"
+                                         class="o_image_64_max" height="52"/>
+                                </div>
+                                <div>
+                                    <field name="price"/>
+                                </div>
+                                <div>
+                                    <field name="category"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="menu_action" model="ir.actions.act_window">
+        <field name="name">Menu</field>
+        <field name="res_model">lunch_menu_management.menu</field>
+        <!--        <field name="res_id">1</field>-->
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{'default_menu_item':'Fish','active_test':False}</field>
+        <!--        <field name="view_id" ref="menu_view_form"/>-->
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('menu_view_tree')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('menu_view_kanban')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('menu_view_form')})]"/>
+        <field name="binding_model_id" ref="lunch_menu_management.model_lunch_menu_management_lunch"/>
+        <field name="binding_type">action</field>
+        <!--        <field name="target">current</field>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a menu
+            </p>
+            <p>
+                Add price with menu
+            </p>
+        </field>
+    </record>
+
+    <!--    <record model="ir.actions.act_window.view" id="menu_form_special">-->
+    <!--        <field name="view_mode">form</field>-->
+    <!--        <field name="view_id" ref="menu_view_form_v2"/>-->
+    <!--        <field name="act_window_id" ref="menu_action"/>-->
+    <!--    </record>-->
+
+
+    <record model="ir.actions.server" id="action_server_body">
+        <field name="name">Server action</field>
+        <field name="model_id" ref="lunch_menu_management.model_lunch_menu_management_menu"/>
+        <field name="binding_model_id" ref="lunch_menu_management.model_lunch_menu_management_menu"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+             for record in records:
+                record.message_post(body="Hello, good night!")
+<!--                action={-->
+<!--                    "type": "ir.actions.act_window",-->
+<!--                    "view_mode": "form",-->
+<!--                    "view_id": "menu_view_form",-->
+<!--                    "res_model": record._name,-->
+<!--                    "res_id": record.id,-->
+<!--            }-->
+        </field>
+    </record>
+
+    <record id="ir_cron_job" model="ir.cron">
+        <field name="name">Cron alert</field>
+        <field name="model_id" ref="lunch_menu_management.model_lunch_menu_management_menu"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_alert()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+
+</odoo>
+
+
+

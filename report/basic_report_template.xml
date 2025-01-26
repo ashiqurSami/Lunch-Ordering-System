@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Report Template -->
+    <template id="basic_menu_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <t t-call="lunch_menu_management.sub_template"/>
+                        <h2 style="text-align: center;">Menu Report</h2>
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                            <thead>
+                                <tr style="background-color: #f0f0f0;">
+                                    <th style="border: 1px solid #000; padding: 8px;">Image</th>
+                                    <th style="border: 1px solid #000; padding: 8px;">Menu Item</th>
+                                    <th style="border: 1px solid #000; padding: 8px;">Category</th>
+                                    <th style="border: 1px solid #000; padding: 8px;">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #000; padding: 8px;">
+                                        <img t-if="doc.image"
+                                             t-att-src="image_data_uri(doc.image)"
+                                             alt="Menu Image"
+                                             style="width: 100px; height: auto;" />
+                                        <span t-if="not doc.image">No Image</span>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 8px;">
+                                        <t t-esc="doc.menu_item" />
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 8px;">
+                                        <t t-esc="doc.category or 'N/A'" />
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 8px;">
+                                        <t t-esc="doc.price" />
+                                        <t t-esc="doc.default_currency.symbol" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="sub_template">
+        <t t-esc="doc.menu_item"/>
+        <h2>It is from sub template</h2>
+  </template>
+
+    <!-- Report Action -->
+    <record id="lunch_menu_management_report_action" model="ir.actions.report">
+        <field name="name">Menu Report</field>
+        <field name="model">lunch_menu_management.menu</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">lunch_menu_management.basic_menu_report_template</field>
+        <field name="report_file">lunch_menu_management.basic_menu_report_template</field>
+        <field name="print_report_name">Menu Report</field>
+        <field name="binding_model_id" ref="lunch_menu_management.model_lunch_menu_management_menu"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

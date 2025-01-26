@@ -1,0 +1,43 @@
+<odoo>
+    <record id="employee_tree_view" model="ir.ui.view">
+        <field name="name">employee.tree.view</field>
+        <field name="model">lunch_menu_management.employee</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="designation"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="employee_form_view" model="ir.ui.view">
+        <field name="name">employee.form.view</field>
+        <field name="model">lunch_menu_management.employee</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="designation"/>
+                    </group>
+                    <notebook>
+                        <page string="Lunch History">
+                            <field name="lunch_ids">
+<!--                                <tree>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="price"/>-->
+<!--                                </tree>-->
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="employee_action" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">lunch_menu_management.employee</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

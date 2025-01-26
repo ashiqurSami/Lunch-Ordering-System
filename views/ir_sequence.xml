@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="menu_id_order" model="ir.sequence">
+        <field name="name">Menu ID</field>
+        <field name="code">menu.id.sequence</field>
+        <field name="prefix">MID</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>
+

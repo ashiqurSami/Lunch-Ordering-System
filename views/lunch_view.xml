@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="lunch_view_form" model="ir.ui.view">
+        <field name="name">lunch.menu>form</field>
+        <field name="model">lunch_menu_management.lunch</field>
+        <field name="arch" type="xml">
+            <form string="Order a Lunch">
+                <header>
+                    <button name="action_confirm" class="oe_highlight" type="object" string="Confirm"
+                            invisible="not id or state!='draft'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="menu_item_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="day"/>
+                        </group>
+                        <group>
+                            <field name="total_price" string="Total bill"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="lunch_view_tree" model="ir.ui.view">
+        <field name="name">lunch.view.tree</field>
+        <field name="model">lunch_menu_management.lunch</field>
+        <field name="arch" type="xml">
+            <tree string="Lunch order list">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="menu_item_ids" widget="many2many_tags" options="{'color_field':'color'}"/>
+                <field name="day"/>
+                <field name="total_price" string="Total bill"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="lunch_view_search" model="ir.ui.view">
+        <field name="name">lunch.menu.management.search</field>
+        <field name="model">lunch_menu_management.lunch</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" operator="=ilike"/>
+                <field name="date"/>
+                <field name="day"/>
+                <field name="total_price" filter_domain="[('total_price','=',self)]"/>
+                <group>
+                    <filter string="Draft" name="filter_draft" domain="[('state','=','draft')]"/>
+                    <filter string="Confirmed" name="filter_confirm" domain="[('state','=','confirm')]"/>
+                </group>
+                <searchpanel>
+                    <field name="state" enable_counters="1"/>
+                </searchpanel>
+                <group>
+                    <filter string="Order status" name="state"
+                            context="{'group_by':'state'}"/>
+                    <filter string="Menu" name="menu_item_ids"
+                            context="{'group_by':'menu_item_ids'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="lunch_view_calendar" model="ir.ui.view">
+        <field name="name">lunch.menu.management.calendar</field>
+        <field name="model">lunch_menu_management.lunch</field>
+        <field name="arch" type="xml">
+            <calendar mode="month" color="state"
+                      date_start="date"
+                      quick_create="False"
+            >
+                <field name="name"/>
+                <field name="menu_item_ids" widget="many2many_tags" options="{'color_field':'color'}"/>
+                <field name="day"/>
+                <field name="total_price"/>
+                <field name="state" invisible="1" filters="1"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="lunch_action" model="ir.actions.act_window">
+        <field name="name">Lunch</field>
+        <field name="res_model">lunch_menu_management.lunch</field>
+        <field name="context">{'search_default_filter_draft':'draft',
+            'search_default_filter_confirm':1,
+            'search_default_state':1
+            }
+        </field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a lunch
+            </p>
+            <p>
+                You can add multiple menus
+            </p>
+        </field>
+    </record>
+</odoo>
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="lunch_menu_management.inherited_menu_report_template" inherit_id="basic_menu_report_template">
+        <xpath expr="//div[contains(@class,'page')]/table/thead/tr/th[4]" position="after">
+            <th>inheritence</th>
+        </xpath>
+        <xpath expr="//div[contains(@class,'page')]/table/tbody/tr/td[4]" position="after">
+            <td>hello</td>
+        </xpath>
+    </template>
+</odoo>
