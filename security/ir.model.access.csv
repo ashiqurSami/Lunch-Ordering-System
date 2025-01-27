@@ -3,5 +3,5 @@ access_lunch_menu_management_lunch,lunch_menu_management.lunch,model_lunch_menu_
 access_lunch_menu_management_menu,lunch_menu_management.menu,model_lunch_menu_management_menu,base.group_user,1,1,1,1
 access_lunch_menu_management_employee,lunch_menu_management.employee,model_lunch_menu_management_employee,base.group_user,1,1,1,1
 access_student_data_update_wizard,menu.data.update.wizard,model_menu_data_update_wizard,base.group_user,1,1,1,1
-
+access_menu_report_excel_wizard,menu.report.excel.wizard,model_menu_report_excel_wizard,base.group_user,1,1,1,1
 
