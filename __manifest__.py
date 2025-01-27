@@ -22,7 +22,8 @@
         'views/ir_sequence.xml',
         'views/lunch_menu_management_menu.xml',
         'report/basic_report_template.xml',
-        'report/inherited_menu_report_template.xml'
+        'report/inherited_menu_report_template.xml',
+        'wizard/menu_data_update_wizard.xml'
     ],
     # "auto_install": True,
     "application": True,

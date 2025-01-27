@@ -23,10 +23,16 @@
                     <notebook>
                         <page string="Lunch History">
                             <field name="lunch_ids">
-<!--                                <tree>-->
-<!--                                    <field name="name"/>-->
-<!--                                    <field name="price"/>-->
-<!--                                </tree>-->
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="menu_item_ids">
+<!--                                        <tree editable="bottom">-->
+<!--                                            <field name="menu_item"/>-->
+<!--                                            <field name="price"/>-->
+<!--                                        </tree>-->
+                                    </field>
+                                    <field name="total_price"/>
+                                </tree>
                             </field>
                         </page>
                     </notebook>
@@ -35,7 +41,7 @@
         </field>
     </record>
 
-    <record id="employee_action" model="ir.actions.act_window">
+    <record id="lunch_menu_management_employee_action" model="ir.actions.act_window">
         <field name="name">Employees</field>
         <field name="res_model">lunch_menu_management.employee</field>
         <field name="view_mode">tree,form</field>

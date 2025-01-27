@@ -122,3 +122,9 @@ class Menu(models.Model):
         self.message_post(body='Custom log message')
         print(self.env.context)
         print(self._context)
+
+    def action_update_data(self):
+        action = self.env.ref('lunch_menu_management.menu_data_update_wizard_action').read()[0]
+        print(type(action))
+        print(action)
+        return self.env.ref('lunch_menu_management.menu_data_update_wizard_action').read()[0]

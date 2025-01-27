@@ -24,6 +24,16 @@
                             <field name="total_price" string="Total bill"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Menus">
+                            <field name="menu_item_ids">
+                                <tree editable="bottom">
+                                    <field name="menu_item"/>
+                                    <field name="price"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

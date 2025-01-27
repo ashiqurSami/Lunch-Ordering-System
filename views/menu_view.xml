@@ -165,8 +165,9 @@
         <field name="binding_view_types">list</field>
         <field name="state">code</field>
         <field name="code">
-             for record in records:
-                record.message_post(body="Hello, good night!")
+            action=model.action_update_data()
+<!--             for record in records:-->
+<!--                record.message_post(body="Hello, good night!")-->
 <!--                action={-->
 <!--                    "type": "ir.actions.act_window",-->
 <!--                    "view_mode": "form",-->
